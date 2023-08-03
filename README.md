@@ -1,3 +1,7 @@
+# Other document
+## DB Diagram
+<img width="800" height="600" alt="Screenshot 2023-07-27 at 11 06 11 AM" src="https://res.cloudinary.com/dvhhz53rr/image/upload/v1691044960/Untitled_mzbuws.png">
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
