@@ -1,17 +1,10 @@
-import {
-  Box,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import CartItem from "./CartItem";
 import { useEffect, useState } from "react";
 import axios from "./axios";
 import { useSelector } from "react-redux";
 
-
-
 export default function Cart() {
-
   const [carts, setCarts] = useState([]);
   const [sum, setSum] = useState(0);
   const count = useSelector((state) => state.counter.count);
@@ -26,10 +19,10 @@ export default function Cart() {
         });
         setCarts(response.data.data);
         let sumValue = 0;
-        response.data.data.forEach(element => {
-          sumValue += element.price;
+        response.data.data.forEach((element) => {
+          sumValue += element.price * element.quantity;
         });
-        setSum(sumValue);
+        setSum(Math.round(sumValue * 100) / 100);
       } catch (err) {
         console.log(err);
       }
@@ -38,7 +31,6 @@ export default function Cart() {
     fetchProductList("/api/v1/cart/all");
   }, [count]);
 
-  
   return (
     <Box
       sx={{
@@ -56,23 +48,38 @@ export default function Cart() {
       }}
     >
       <img alt="nike" src="/assets/nike.png" width={50} height={30} />
-      <Stack direction="row" sx={{ mb: 2, pr: 2 }} justifyContent="space-between">
+      <Stack
+        direction="row"
+        sx={{ mb: 2, pr: 2 }}
+        justifyContent="space-between"
+      >
         <Typography>
           <Box sx={{ fontWeight: 700, mt: 1, ml: 1, fontSize: 24 }}>
             Your Cart
           </Box>
         </Typography>
         <Typography>
-          <Box sx={{ fontWeight: 700, mt: 1, ml: 1, fontSize: 24 }}>
-            ${sum}
-          </Box>
+          <Box sx={{ fontWeight: 700, mt: 1, ml: 1, fontSize: 24 }}>${sum}</Box>
         </Typography>
       </Stack>
       <Box sx={{ height: 520, width: "100%", overflowY: "hidden" }}>
-        <Box sx={{ height: "100%",  width: "100%", overflowY: "auto", paddingRight: '15px',  }}>
-        {carts.map((cartItem) => (
-            <CartItem cartItem={cartItem} />
-          ))}
+        <Box
+          sx={{
+            height: "100%",
+            width: "100%",
+            overflowY: "auto",
+            paddingRight: "15px",
+          }}
+        >
+          {carts.length === 0 ? (
+            <Box sx={{marginLeft: '10px'}}>  Your cart is empty</Box>
+          ) : (
+            <div>
+              {carts.map((cartItem) => (
+                <CartItem cartItem={cartItem} />
+              ))}
+            </div>
+          )}
         </Box>
       </Box>
     </Box>

@@ -25,6 +25,7 @@ export default function CartItem({ cartItem }) {
         quantity: mount + 1
       },
     });
+    dispatch({ type: 'INCREMENT' });
     console.log(response);
     setMount(mount + 1);
   }
@@ -38,6 +39,7 @@ export default function CartItem({ cartItem }) {
         quantity: mount - 1
       },
     });
+    dispatch({ type: 'INCREMENT' });
     console.log(response);
     setMount(mount - 1);
   }
